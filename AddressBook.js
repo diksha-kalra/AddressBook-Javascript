@@ -98,12 +98,23 @@ let editContact=()=>{
         addressBookArray.find((contact)=>contact.firstName==userName).firstName=userData;
     }
 }
+let deletContact=()=>{
+    let userName=prompt("Enter contact name you want to delete: ");
+    if(addressBookArray.length==0){
+        console.log("No contacts");
+    }else if(addressBookArray.includes(userName)==false){
+        return "No such contact";
+    }else{
+        addressBookArray=addressBookArray.filter((contacts)=>contacts.firstName!=userName);
+        return true;
+    }
+}
 
 console.log("Welcome To AddressBook Program");
 let userInput=0;
 //calling add to addressbook method
 do{
-    userInput=prompt("Enter 1-Add Contact 2-Edit Contact 3-View Contacts 0-Exit: ");
+    userInput=prompt("Enter 1-Add Contact 2-Edit Contact 3-View Contacts 4-Delete Contact 0-Exit: ");
     if(userInput==1){
         addContactsToAddressBook();
     }
@@ -112,6 +123,10 @@ do{
     }
     if(userInput==3){
         viewContacts();
+    }
+    if(userInput==4){
+        let status=deletContact();
+        console.log("Contact Deleted: "+status);
     }
 }while(userInput!=0);
 
