@@ -4,6 +4,7 @@ const ADDRESS_REGEX_PATTERN=RegExp('^[a-zA-z]{4,}$');
 const PINCODE_REGEX_PATTERN=RegExp('^[1-9]{1}[0-9]{5}|[1-9]{1}[0-9]{2}\\s[0-9]{3}');
 const PHONE_NUMBER_PATTERN = RegExp('^[1-9]{2}\\s[1-9]{1}[0-9]{9}$');
 const EMAIL_REGEX_PATTERN=RegExp(/[a-zA-Z0-9]+([._+-][0-9a-zA-Z])*@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/);
+const prompt=require('prompt-sync')();
 
 class ContactPersonData{
     //property
@@ -59,9 +60,35 @@ class ContactPersonData{
     }
 }
 
-try{
-    let person=new ContactPersonData("Diksha","Kalra","delhi","delhi","delhi",110019,"91 9899161947","kalra@gmail.com");
-    console.log(person.toString());
-}catch(e){
-    console.log(e);
+//array to store contacts
+let addressBookArray=new Array();
+//add contacts to address book
+let addContactsToAddressBook=()=>{
+    let userFirstName=prompt("Enter First Name: ");
+    let userLastName=prompt("Enter Last Name: ");
+    let userAddress=prompt("Enter Address: ");
+    let userCity=prompt("Enter City Name: ");
+    let userState=prompt("Enter State Name: ");
+    let userZip=prompt("Enter Zip Code: ");
+    let userPhoneNumber=prompt("Enter Phone Number: ");
+    let userEmailId=prompt("Enter Email id: ");
+    try{
+        let person=new ContactPersonData(userFirstName,userLastName,userAddress,userCity,userState,userZip,userPhoneNumber,userEmailId);
+        addressBookArray.push(person);
+        console.log("Contact Added: ");
+    }catch(e){
+        console.log(e);
+    }
 }
+
+console.log("Welcome To AddressBook Program");
+let userInput=0;
+//calling add to addressbook method
+do{
+    userInput=prompt("Enter 1-Add contact 0-Exit: ");
+    if(userInput==1){
+        addContactsToAddressBook();
+    }
+}while(userInput!=0);
+
+
