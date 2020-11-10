@@ -86,6 +86,7 @@ let addContactsToAddressBook=()=>{
 let viewContacts=()=>{
     console.log(addressBookArray.toString()+"\n");
 }
+//edit contact
 let editContact=()=>{
     if(addressBookArray.length==0){
             console.log("No contacts");
@@ -102,6 +103,7 @@ let editContact=()=>{
         addressBookArray.find((contact)=>contact.firstName==userName).firstName=userData;
     }    
     }
+//delete contact
 let deletContact=()=>{
     if(addressBookArray.length==0){
         console.log("No contacts");
@@ -116,12 +118,16 @@ let deletContact=()=>{
         return true;
     }
 }
-
+//get number of contacts
+let findNumberOfContacts=()=>{
+    let count=addressBookArray.reduce(contacts=>contacts+1,0);
+    return count;
+}
 console.log("Welcome To AddressBook Program");
 let userInput=0;
 //calling add to addressbook method
-do{
-    userInput=prompt("Enter 1-Add Contact 2-Edit Contact 3-View Contacts 4-Delete Contact 0-Exit: ");
+do{ console.log("Enter 1-Add Contact 2-Edit Contact 3-View Contacts 4-Delete Contact 5-Number Of Contacts 0-Exit")
+    userInput=prompt("Enter Option: ");
     if(userInput==1){
         addContactsToAddressBook();
     }
@@ -134,6 +140,10 @@ do{
     if(userInput==4){
         let status=deletContact();
         console.log("Contact Deleted: "+status);
+    }
+    if(userInput==5){
+        let count=findNumberOfContacts();
+        console.log("Number of contacts in address book are: "+count);
     }
 }while(userInput!=0);
 
