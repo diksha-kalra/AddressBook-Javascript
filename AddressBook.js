@@ -7,6 +7,7 @@ const EMAIL_REGEX_PATTERN=RegExp(/[a-zA-Z0-9]+([._+-][0-9a-zA-Z])*@[a-zA-Z0-9-]+
 const prompt=require('prompt-sync')();
 
 class ContactPersonData{
+    
     //property
     firstName;
     lastName;
@@ -52,7 +53,7 @@ class ContactPersonData{
             this.email=email
         } 
     }
-    
+    set firstName(firstName){this._firstName=firstName; }
     //method
     toString(){
         return "First Name: "+this.firstName+" Last Name: "+this.lastName+" Address: "+this.address+" City: "+this.city+
@@ -81,13 +82,36 @@ let addContactsToAddressBook=()=>{
     }
 }
 
+//view contacts by name
+let viewContacts=()=>{
+    console.log(addressBookArray.toString()+"\n");
+}
+let editContact=()=>{
+    let userName=prompt("Enter the name whose contact you want to edit: ");
+    let userData=prompt("Enter new name: ");
+    if(addressBookArray.length==0){
+        console.log("No contacts");
+    }else if(addressBookArray.includes(userName)==false){
+        console.log("No such contact");
+        return;
+    }else{
+        addressBookArray.find((contact)=>contact.firstName==userName).firstName=userData;
+    }
+}
+
 console.log("Welcome To AddressBook Program");
 let userInput=0;
 //calling add to addressbook method
 do{
-    userInput=prompt("Enter 1-Add contact 0-Exit: ");
+    userInput=prompt("Enter 1-Add Contact 2-Edit Contact 3-View Contacts 0-Exit: ");
     if(userInput==1){
         addContactsToAddressBook();
+    }
+    if(userInput==2){
+        editContact();
+    }
+    if(userInput==3){
+        viewContacts();
     }
 }while(userInput!=0);
 
