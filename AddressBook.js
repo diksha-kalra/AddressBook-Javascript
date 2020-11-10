@@ -131,22 +131,33 @@ let findNumberOfContacts=()=>{
 //serach contacts by city
 let searchContactInCity=()=>{
     let userCityName=prompt("Enter city name: ");
-    let userName=prompt("Enter name: ")
-    let contactByCity=addressBookArray.filter(contact=>contact.city==userCityName).find(contact=>contact.firstName==userName);
-    console.log("Contact found in given city:"+contactByCity.length);
+    let userName=prompt("Enter name: ");
+    let searchcontactByCity=addressBookArray.filter(contact=>contact.city==userCityName).find(contact=>contact.firstName==userName);
+    console.log("Contact found in given city:"+searchcontactByCity);
 }
 let searchContactInState=()=>{
     let userStateName=prompt("Enter state name: ");
-    let userName=prompt("Enter name: ")
+    let userName=prompt("Enter name: ");
     let serachcontactByState=addressBookArray.filter(contact=>contact.state==userStateName).find(contact=>contact.firstName==userName);
-    console.log("Contact found in given state: ",serachcontactByState);
+    console.log("Contact found in given state: ",+serachcontactByState);
+}
+//view person by city
+let viewContactByCity=()=>{
+    let userCityName=prompt("Enter city name: ");
+    let contactByCity=addressBookArray.filter(contact=>contact.city==userCityName);
+    console.log("Contacts found in given city:"+contactByCity);
+}
+let viewContactByState=()=>{
+    let userStateName=prompt("Enter state name: ");
+    let contactByState=addressBookArray.filter(contact=>contact.state==userStateName);
+    console.log("Contacts found in given state: ",+contactByState);
 }
 console.log("Welcome To AddressBook Program");
 let userInput=0;
 //calling add to addressbook method
 do{ 
     console.log("Enter 1-Add Contact 2-Edit Contact 3-View Contacts 4-Delete Contact");
-    console.log("5-Number Of Contacts 6-search contact by city or state 0-Exit");
+    console.log("5-Number Of Contacts 6-search contact by city or state 7-view contact by city or state 0-Exit");
     userInput=prompt("Enter Option: ");
     if(userInput==1){
         addContactsToAddressBook();
@@ -168,6 +179,10 @@ do{
     if(userInput==6){
     searchContactInCity();
     searchContactInState();    
+    }
+    if(userInput==7){
+        viewContactByCity();
+        viewContactByState();
     }
 }while(userInput!=0);
 
