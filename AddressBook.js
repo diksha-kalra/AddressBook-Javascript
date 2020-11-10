@@ -87,17 +87,21 @@ let viewContacts=()=>{
     console.log(addressBookArray.toString()+"\n");
 }
 let editContact=()=>{
+    if(addressBookArray.length==0){
+            console.log("No contacts");
+            return;
+    }
     let userName=prompt("Enter the name whose contact you want to edit: ");
     let userData=prompt("Enter new name: ");
-    if(addressBookArray.length==0){
-        console.log("No contacts");
-    }else if(addressBookArray.includes(userName)==false){
+    let found=addressBookArray.find((contact)=>contact.firstName==userName);
+    if(found==undefined){
         console.log("No such contact");
         return;
-    }else{
-        addressBookArray.find((contact)=>contact.firstName==userName).firstName=userData;
     }
-}
+    else{
+        addressBookArray.find((contact)=>contact.firstName==userName).firstName=userData;
+    }    
+    }
 
 console.log("Welcome To AddressBook Program");
 let userInput=0;
