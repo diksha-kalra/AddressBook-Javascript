@@ -67,6 +67,11 @@ let addressBookArray=new Array();
 let addContactsToAddressBook=()=>{
     let userFirstName=prompt("Enter First Name: ");
     let userLastName=prompt("Enter Last Name: ");
+    if(addressBookArray.find((contact)=>(contact.firstName+contact.lastName)==(userFirstName+userLastName)))
+    {   
+        console.log("Name already present in address book")
+        return;
+    }
     let userAddress=prompt("Enter Address: ");
     let userCity=prompt("Enter City Name: ");
     let userState=prompt("Enter State Name: ");
