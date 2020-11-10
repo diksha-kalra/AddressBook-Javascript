@@ -128,10 +128,25 @@ let findNumberOfContacts=()=>{
     let count=addressBookArray.reduce(contacts=>contacts+1,0);
     return count;
 }
+//serach contacts by city
+let searchContactInCity=()=>{
+    let userCityName=prompt("Enter city name: ");
+    let userName=prompt("Enter name: ")
+    let contactByCity=addressBookArray.filter(contact=>contact.city==userCityName).find(contact=>contact.firstName==userName);
+    console.log("Contact found in given city:"+contactByCity.length);
+}
+let searchContactInState=()=>{
+    let userStateName=prompt("Enter state name: ");
+    let userName=prompt("Enter name: ")
+    let serachcontactByState=addressBookArray.filter(contact=>contact.state==userStateName).find(contact=>contact.firstName==userName);
+    console.log("Contact found in given state: ",serachcontactByState);
+}
 console.log("Welcome To AddressBook Program");
 let userInput=0;
 //calling add to addressbook method
-do{ console.log("Enter 1-Add Contact 2-Edit Contact 3-View Contacts 4-Delete Contact 5-Number Of Contacts 0-Exit")
+do{ 
+    console.log("Enter 1-Add Contact 2-Edit Contact 3-View Contacts 4-Delete Contact");
+    console.log("5-Number Of Contacts 6-search contact by city or state 0-Exit");
     userInput=prompt("Enter Option: ");
     if(userInput==1){
         addContactsToAddressBook();
@@ -149,6 +164,10 @@ do{ console.log("Enter 1-Add Contact 2-Edit Contact 3-View Contacts 4-Delete Con
     if(userInput==5){
         let count=findNumberOfContacts();
         console.log("Number of contacts in address book are: "+count);
+    }
+    if(userInput==6){
+    searchContactInCity();
+    searchContactInState();    
     }
 }while(userInput!=0);
 
