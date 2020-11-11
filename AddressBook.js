@@ -1,10 +1,10 @@
-//constants
 const NAME_REGEX_PATTERN=RegExp('^[A-Z]{1}[a-z]{2,}$');
 const ADDRESS_REGEX_PATTERN=RegExp('^[a-zA-z]{4,}$');
 const PINCODE_REGEX_PATTERN=RegExp('^[1-9]{1}[0-9]{5}|[1-9]{1}[0-9]{2}\\s[0-9]{3}');
 const PHONE_NUMBER_PATTERN = RegExp('^[1-9]{2}\\s[1-9]{1}[0-9]{9}$');
 const EMAIL_REGEX_PATTERN=RegExp(/[a-zA-Z0-9]+([._+-][0-9a-zA-Z])*@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/);
 const prompt=require('prompt-sync')();
+const addressBookArray=new Array();
 
 class ContactPersonData{
     
@@ -61,8 +61,6 @@ class ContactPersonData{
     }
 }
 
-//array to store contacts
-let addressBookArray=new Array();
 //add contacts to address book
 let addContactsToAddressBook=()=>{
     let userFirstName=prompt("Enter First Name: ");
@@ -89,7 +87,7 @@ let addContactsToAddressBook=()=>{
 
 //view contacts by name
 let viewContacts=()=>{
-    console.log(addressBookArray.toString()+"\n");
+    console.log(addressBookArray+"\n");
 }
 //edit contact
 let editContact=()=>{
@@ -143,21 +141,22 @@ let searchContactInState=()=>{
 }
 //view person by city
 let viewContactByCity=()=>{
-    let userCityName=prompt("Enter city name: ");
-    let contactByCity=addressBookArray.filter(contact=>contact.city==userCityName);
-    console.log("Contacts found in given city:"+contactByCity);
+    result = addressBookArray.reduce((h, contact) => Object.assign(h, { [contact.city]:( h[contact.city] || [] ).concat({firstName: contact.firstName, lastNam: contact.lastName, address: contact.address,
+             city: contact.city,state: contact.state,phoneNumber: contact.phoneNumber,email: contact.email}) }), {});
+    console.log(JSON.stringify(result));
 }
 let viewContactByState=()=>{
-    let userStateName=prompt("Enter state name: ");
-    let contactByState=addressBookArray.filter(contact=>contact.state==userStateName);
-    console.log("Contacts found in given state: ",+contactByState);
+    result = addressBookArray.reduce((h, contact) => Object.assign(h, { [contact.state]:( h[contact.state] || [] ).concat({firstName: contact.firstName, lastNam: contact.lastName, address: contact.address,
+             city: contact.city,state: contact.state,phoneNumber: contact.phoneNumber,email: contact.email}) }), {});
+    console.log(JSON.stringify(result));
 }
+
 console.log("Welcome To AddressBook Program");
 let userInput=0;
 //calling add to addressbook method
 do{ 
     console.log("Enter 1-Add Contact 2-Edit Contact 3-View Contacts 4-Delete Contact");
-    console.log("5-Number Of Contacts 6-search contact by city or state 7-view contact by city or state 0-Exit");
+    console.log("5-Number Of Contacts 6-search contact by city 7-search contact by state 8-view contact by city 9 view contact by state 0-Exit");
     userInput=prompt("Enter Option: ");
     if(userInput==1){
         addContactsToAddressBook();
@@ -177,11 +176,14 @@ do{
         console.log("Number of contacts in address book are: "+count);
     }
     if(userInput==6){
-    searchContactInCity();
-    searchContactInState();    
+        searchContactInCity();   
     }
     if(userInput==7){
+        searchContactInState(); 
+    }
+    if(userInput==8){
         viewContactByCity();
+    }if(userInput==9){
         viewContactByState();
     }
 }while(userInput!=0);
