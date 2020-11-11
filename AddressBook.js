@@ -166,38 +166,51 @@ let sortContactByName=()=>{
         return ((a.firstName<b.firstName)?-1:1)
     });
 }
+//sort person by city
+let sortContactByCity=()=>{
+    return addressBookArray.sort((a,b)=>{
+        return ((a.city<b.city)?-1:1)
+    });
+}
+//sort person by state
+let sortContactByState=()=>{
+    return addressBookArray.sort((a,b)=>{
+        return ((a.state<b.state)?-1:1)
+    });
+}
+//sort person by zip
+let sortContactByZip=()=>{
+    return addressBookArray.sort((a,b)=>{
+        return ((a.zip<b.zip)?-1:1)
+    });
+}
+
 console.log("Welcome To AddressBook Program");
 let userInput=0;
 //calling add to addressbook method
 do{ 
     console.log("Enter 1-Add Contact\n2-Edit Contact\n3-View Contacts\n4-Delete Contact");
     console.log("5-Number Of Contacts\n6-search contact by city\n7-search contact by state\n8-view contact by city");
-    console.log("9 view contact by state\n10- count contact by city or state\n11-Sort by name\n0-exit");
+    console.log("9 view contact by state\n10- count contact by city or state\n11-Sort by name");
+    console.log("12-Sort by city\n13-state\n14-zip\n 0-Exit");
     userInput=prompt("Enter Option: ");
     if(userInput==1){
         addContactsToAddressBook();
-    }
-    if(userInput==2){
+    }if(userInput==2){
         editContact();
-    }
-    if(userInput==3){
+    }if(userInput==3){
         viewContacts();
-    }
-    if(userInput==4){
+    }if(userInput==4){
         let status=deletContact();
         console.log("Contact Deleted: "+status);
-    }
-    if(userInput==5){
+    }if(userInput==5){
         let count=findNumberOfContacts();
         console.log("Number of contacts in address book are: "+count);
-    }
-    if(userInput==6){
+    }if(userInput==6){
         searchContactInCity();   
-    }
-    if(userInput==7){
+    }if(userInput==7){
         searchContactInState(); 
-    }
-    if(userInput==8){
+    }if(userInput==8){
         viewContactByCity();
     }if(userInput==9){
         viewContactByState();
@@ -207,6 +220,15 @@ do{
     }if(userInput==11){
         let sortByName=sortContactByName();
         console.log(sortByName);
+    }if(userInput==12){
+        let sortByCity=sortContactByCity();
+        console.log(sortByCity);
+    }if(userInput==13){
+        let sortByState=sortContactByState();
+        console.log(sortByState);
+    }if(userInput==14){
+        let sortByZip=sortContactByZip();
+        console.log(sortByZip);
     }
 }while(userInput!=0);
 
