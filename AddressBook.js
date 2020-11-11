@@ -160,13 +160,19 @@ let countByState=()=>{
     let countContactByState=addressBookArray.filter(contact=>contact.city==userStateName).reduce(contacts=>contacts+1,0);
     console.log("Contacts in city: "+userStateName+" are: "+countContactByState);
 }
+//sort person by name
+let sortContactByName=()=>{
+    return addressBookArray.sort((a,b)=>{
+        return ((a.firstName<b.firstName)?-1:1)
+    });
+}
 console.log("Welcome To AddressBook Program");
 let userInput=0;
 //calling add to addressbook method
 do{ 
     console.log("Enter 1-Add Contact\n2-Edit Contact\n3-View Contacts\n4-Delete Contact");
     console.log("5-Number Of Contacts\n6-search contact by city\n7-search contact by state\n8-view contact by city");
-    console.log("9 view contact by state\n10- count contact by city or state\n0-exit");
+    console.log("9 view contact by state\n10- count contact by city or state\n11-Sort by name\n0-exit");
     userInput=prompt("Enter Option: ");
     if(userInput==1){
         addContactsToAddressBook();
@@ -198,6 +204,9 @@ do{
     }if(userInput==10){
         countByCity();
         countByState();
+    }if(userInput==11){
+        let sortByName=sortContactByName();
+        console.log(sortByName);
     }
 }while(userInput!=0);
 
