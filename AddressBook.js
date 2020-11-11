@@ -84,7 +84,6 @@ let addContactsToAddressBook=()=>{
         console.log(e);
     }
 }
-
 //view contacts by name
 let viewContacts=()=>{
     console.log(addressBookArray+"\n");
@@ -150,13 +149,24 @@ let viewContactByState=()=>{
              city: contact.city,state: contact.state,phoneNumber: contact.phoneNumber,email: contact.email}) }), {});
     console.log(JSON.stringify(result));
 }
-
+//count person by city or state
+let countByCity=()=>{
+    let userCityName=prompt("Enter city name: ");
+    let countContactByCity=addressBookArray.filter(contact=>contact.city==userCityName).reduce(contacts=>contacts+1,0);
+    console.log("Contacts in city: "+userCityName+" are: "+countContactByCity);
+}
+let countByState=()=>{
+    let userStateName=prompt("Enter state name: ");
+    let countContactByState=addressBookArray.filter(contact=>contact.city==userStateName).reduce(contacts=>contacts+1,0);
+    console.log("Contacts in city: "+userStateName+" are: "+countContactByState);
+}
 console.log("Welcome To AddressBook Program");
 let userInput=0;
 //calling add to addressbook method
 do{ 
-    console.log("Enter 1-Add Contact 2-Edit Contact 3-View Contacts 4-Delete Contact");
-    console.log("5-Number Of Contacts 6-search contact by city 7-search contact by state 8-view contact by city 9 view contact by state 0-Exit");
+    console.log("Enter 1-Add Contact\n2-Edit Contact\n3-View Contacts\n4-Delete Contact");
+    console.log("5-Number Of Contacts\n6-search contact by city\n7-search contact by state\n8-view contact by city");
+    console.log("9 view contact by state\n10- count contact by city or state\n0-exit");
     userInput=prompt("Enter Option: ");
     if(userInput==1){
         addContactsToAddressBook();
@@ -185,6 +195,9 @@ do{
         viewContactByCity();
     }if(userInput==9){
         viewContactByState();
+    }if(userInput==10){
+        countByCity();
+        countByState();
     }
 }while(userInput!=0);
 
