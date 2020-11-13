@@ -1,188 +1,84 @@
+import {addressBookArray,addContactsToAddressBook,viewContacts,editContact,deletContact,viewContactByCity,viewContactByState,searchContactInCity,searchContactInState,findNumberOfContacts, countByCity,countByState,sortContactByCity,sortContactByName,sortContactByState,sortContactByZip} from './AddressBookController.js';
+import {createRequire} from "module";
+const require=createRequire(import.meta.url);
+const prompt=require('prompt-sync')();
 const NAME_REGEX_PATTERN=RegExp('^[A-Z]{1}[a-z]{2,}$');
 const ADDRESS_REGEX_PATTERN=RegExp('^[a-zA-z]{4,}$');
 const PINCODE_REGEX_PATTERN=RegExp('^[1-9]{1}[0-9]{5}|[1-9]{1}[0-9]{2}\\s[0-9]{3}');
 const PHONE_NUMBER_PATTERN = RegExp('^[1-9]{2}\\s[1-9]{1}[0-9]{9}$');
 const EMAIL_REGEX_PATTERN=RegExp(/[a-zA-Z0-9]+([._+-][0-9a-zA-Z])*@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/);
-const prompt=require('prompt-sync')();
-const addressBookArray=new Array();
-
 class ContactPersonData{
-    
-    //property
-    firstName;
-    lastName;
-    address;
-    city;
-    state;
-    zip;
-    phoneNumber;
-    email;
-
-    //constructor
     constructor(firstName,lastName,address,city,state,zip,phoneNumber,email){
+        this.firstName=firstName;
+        this.lastName=lastName;
+        this.address=address;
+        this.city=city;
+        this.state=state;
+        this.zip=zip;
+        this.phoneNumber=phoneNumber;
+        this.email=email
+    }
+    get firstName(){return this._firstName;}
+    set firstName(firstName){
         if(!NAME_REGEX_PATTERN.test(firstName)) throw "invalid first name"
         {
-            this.firstName=firstName;
+        this._firstName=firstName; 
         }
+    }
+    get lastName(){return this._lastName;}
+    set lastName(lastName){
         if(!NAME_REGEX_PATTERN.test(lastName)) throw "invalid last name"
         {
-            this.lastName=lastName;
+            this._lastName=lastName;
         }
+    }
+    get address(){return this._address;}
+    set address(address){
         if(!ADDRESS_REGEX_PATTERN.test(address)) throw "invalid address"
         {
-            this.address=address;
+            this._address=address;
         }
+    }
+    get city(){return this._city;}
+    set city(city){
         if(!ADDRESS_REGEX_PATTERN.test(city)) throw "invaid city name"
         {
-            this.city=city;
+            this._city=city;
         }
+    }
+    get state(){return this._state=state;}
+    set state(state){
         if(!ADDRESS_REGEX_PATTERN.test(state)) throw "invalid state name"
         {
-            this.state=state;
+            this._state=state;
         }
+    }
+    get zip(){return this._zip=zip;}
+    set zip(zip){
         if(!PINCODE_REGEX_PATTERN.test(zip)) throw "invalid zip code"
         {
-            this.zip=zip;
+            this._zip=zip;
         }
+    }
+    get phoneNumber(){return this._phoneNumber;}
+    set phoneNumber(phoneNumber){
         if(!PHONE_NUMBER_PATTERN.test(phoneNumber)) throw "invalid phone number"
         {
-            this.phoneNumber=phoneNumber;
+            this._phoneNumber=phoneNumber;
         }
+    }   
+    get email(){return this._email;}
+    set email(email){
         if(!EMAIL_REGEX_PATTERN.test(email)) throw "invalid email address"
         {
-            this.email=email
-        } 
+            this._email=email;
+        }
     }
-    set firstName(firstName){this._firstName=firstName; }
     //method
     toString(){
         return "First Name: "+this.firstName+" Last Name: "+this.lastName+" Address: "+this.address+" City: "+this.city+
         " State: "+this.state+" Zip: "+this.zip+" Phone Number: "+this.phoneNumber+" Email: "+this.email;
     }
-}
-
-//add contacts to address book
-let addContactsToAddressBook=()=>{
-    let userFirstName=prompt("Enter First Name: ");
-    let userLastName=prompt("Enter Last Name: ");
-    if(addressBookArray.find((contact)=>(contact.firstName+contact.lastName)==(userFirstName+userLastName)))
-    {   
-        console.log("Name already present in address book")
-        return;
-    }
-    let userAddress=prompt("Enter Address: ");
-    let userCity=prompt("Enter City Name: ");
-    let userState=prompt("Enter State Name: ");
-    let userZip=prompt("Enter Zip Code: ");
-    let userPhoneNumber=prompt("Enter Phone Number: ");
-    let userEmailId=prompt("Enter Email id: ");
-    try{
-        let person=new ContactPersonData(userFirstName,userLastName,userAddress,userCity,userState,userZip,userPhoneNumber,userEmailId);
-        addressBookArray.push(person);
-        console.log("Contact Added: ");
-    }catch(e){
-        console.log(e);
-    }
-}
-//view contacts by name
-let viewContacts=()=>{
-    console.log(addressBookArray+"\n");
-}
-//edit contact
-let editContact=()=>{
-    if(addressBookArray.length==0){
-            console.log("No contacts");
-            return;
-    }
-    let userName=prompt("Enter the name whose contact you want to edit: ");
-    let userData=prompt("Enter new name: ");
-    let found=addressBookArray.find((contact)=>contact.firstName==userName);
-    if(found==undefined){
-        console.log("No such contact");
-        return;
-    }
-    else{
-        addressBookArray.find((contact)=>contact.firstName==userName).firstName=userData;
-    }    
-    }
-//delete contact
-let deletContact=()=>{
-    if(addressBookArray.length==0){
-        console.log("No contacts");
-        return;
-    }   
-    let userName=prompt("Enter contact name you want to delete: ");
-    let found=addressBookArray.find((contact)=>contact.firstName==userName);
-    if(found==undefined){
-        return "No such contact";
-    }else{
-        addressBookArray=addressBookArray.filter((contacts)=>contacts.firstName!=userName);
-        return true;
-    }
-}
-//get number of contacts
-let findNumberOfContacts=()=>{
-    let count=addressBookArray.reduce(contacts=>contacts+1,0);
-    return count;
-}
-//serach contacts by city
-let searchContactInCity=()=>{
-    let userCityName=prompt("Enter city name: ");
-    let userName=prompt("Enter name: ");
-    let searchcontactByCity=addressBookArray.filter(contact=>contact.city==userCityName).find(contact=>contact.firstName==userName);
-    console.log("Contact found in given city:"+searchcontactByCity);
-}
-let searchContactInState=()=>{
-    let userStateName=prompt("Enter state name: ");
-    let userName=prompt("Enter name: ");
-    let serachcontactByState=addressBookArray.filter(contact=>contact.state==userStateName).find(contact=>contact.firstName==userName);
-    console.log("Contact found in given state: ",+serachcontactByState);
-}
-//view person by city
-let viewContactByCity=()=>{
-    result = addressBookArray.reduce((h, contact) => Object.assign(h, { [contact.city]:( h[contact.city] || [] ).concat({firstName: contact.firstName, lastNam: contact.lastName, address: contact.address,
-             city: contact.city,state: contact.state,phoneNumber: contact.phoneNumber,email: contact.email}) }), {});
-    console.log(JSON.stringify(result));
-}
-let viewContactByState=()=>{
-    result = addressBookArray.reduce((h, contact) => Object.assign(h, { [contact.state]:( h[contact.state] || [] ).concat({firstName: contact.firstName, lastNam: contact.lastName, address: contact.address,
-             city: contact.city,state: contact.state,phoneNumber: contact.phoneNumber,email: contact.email}) }), {});
-    console.log(JSON.stringify(result));
-}
-//count person by city or state
-let countByCity=()=>{
-    let userCityName=prompt("Enter city name: ");
-    let countContactByCity=addressBookArray.filter(contact=>contact.city==userCityName).reduce(contacts=>contacts+1,0);
-    console.log("Contacts in city: "+userCityName+" are: "+countContactByCity);
-}
-let countByState=()=>{
-    let userStateName=prompt("Enter state name: ");
-    let countContactByState=addressBookArray.filter(contact=>contact.city==userStateName).reduce(contacts=>contacts+1,0);
-    console.log("Contacts in city: "+userStateName+" are: "+countContactByState);
-}
-//sort person by name
-let sortContactByName=()=>{
-    return addressBookArray.sort((a,b)=>{
-        return ((a.firstName<b.firstName)?-1:1)
-    });
-}
-//sort person by city
-let sortContactByCity=()=>{
-    return addressBookArray.sort((a,b)=>{
-        return ((a.city<b.city)?-1:1)
-    });
-}
-//sort person by state
-let sortContactByState=()=>{
-    return addressBookArray.sort((a,b)=>{
-        return ((a.state<b.state)?-1:1)
-    });
-}
-//sort person by zip
-let sortContactByZip=()=>{
-    return addressBookArray.sort((a,b)=>{
-        return ((a.zip<b.zip)?-1:1)
-    });
 }
 
 console.log("Welcome To AddressBook Program");
@@ -231,5 +127,4 @@ do{
         console.log(sortByZip);
     }
 }while(userInput!=0);
-
-
+export{ContactPersonData}
